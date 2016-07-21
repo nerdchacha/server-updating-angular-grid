@@ -99,3 +99,7 @@ Sample url of the api end point -
     $scope.config.sizeQuerystringParam = 'size';
 
     $scope.config.objectName = 'tickets';
+
+![Alt text](/screenshots/sample_screenshot1.PNG?raw=true "Screen Shot 1")
+
+![Alt text](/screenshots/sample_screenshot2.PNG?raw=true "Screen Shot 2")
