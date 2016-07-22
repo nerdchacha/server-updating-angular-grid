@@ -29,7 +29,7 @@ The endpoint should define 4 query string parameters (whose names are configurab
  4. **size** - This parameter defines the number of items currently being displayed in the grid.  
  *[configurable]*
 
-All the above parameters can be used by the server to generate appropriate data and pass onto the client as a jsob object. 
+All the above parameters can be used by the server to generate appropriate data and pass onto the client as a json object. 
 
 The server should respond with the following data
 
@@ -47,7 +47,8 @@ The sample structure of the response should be
     	size:10
     }
 
-The **rows** property in the response is configurable and the server can send data in any other property like `tickets` or `users` but the other properties should have the same name as defined above
+The **rows** property name in the response is configurable and the server can send data in any other property name like `tickets` or `users`.
+Other properties names should have the same name as defined above.
 
 
 
