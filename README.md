@@ -1,7 +1,6 @@
 # UI grid with pagination and sorting
 A simple grid built in angular js with pagination and sort that gets the data from the server on every pagination or sort request
 
-----------
 
 
 # Dependencies
@@ -15,7 +14,6 @@ A simple grid built in angular js with pagination and sort that gets the data fr
 The angular-grid.js file contains a module named **yangular-grid** that can be defined as a dependency in any angular project where the grid is to be used
 
 
-----------
 
 
 #Prerequisite
@@ -52,12 +50,10 @@ The sample structure of the response should be
 The **rows** property in the response is configurable and the server can send data in any other property like `tickets` or `users` but the other properties should have the same name as defined above
 
 
-----------
 
 #Usage
 
 
-----------
 The grid can be used like
 
     <yag config="config"></yag>
