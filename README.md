@@ -71,8 +71,9 @@ Following are the configurations
  -  **pageQuerystringParam** - Name of the query string **page** parameter being used at server side
  -  **sizeQuerystringParam** - Name of the query string **size** parameter being used at server side
  - **columns** - array of object which contains details about the columns of the grid.
- Each object should have 2 properties namely `key`as the name of the column in db/json and `name`as the name to be displayed in the HTML for that column
+ Each object should have 4 properties namely `key`as the name of the column in db/json and `name`as the name to be displayed in the HTML for that column, `cssClass` as the css class for the column and `render` as a call back method that has access to the data returned from the server which can be used to modify the data before it is rendered
  - **objectName** - The property name in which the server sends the actual data in response. This was set to **rows** in the above example.
+ - - **onRowClick** - A callback method that has access to the row properties and can be used to add click events to each row.
 
 #Sample Configuration
 
