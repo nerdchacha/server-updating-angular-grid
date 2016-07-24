@@ -20,26 +20,26 @@ app.factory('agSortFactory',function($http){
         };
         return ret;
     })
-    .directive('yag',function(agSortFactory){
-        return{
-            restrict : 'E',
+	.directive('yag',function(agSortFactory){
+		return{
+			restrict : 'E',
             replace: true,
             template :  '<div id="yag">'+
-                            '<div class=""><div class="form-inline"><div class="form-group">Show <select class="form-control" ng-model="size" ng-change="changeSize()"><option value="10">10</option><option value="20">20</option><option value="30">30</option></select>  per page</div></div></div><br/>'+
+                            '<div><div class="form-inline"><div class="form-group">Show <select class="form-control" ng-model="size" ng-change="changeSize()"><option value="10">10</option><option value="20">20</option><option value="30">30</option></select>  per page</div></div></div><br/>'+
                             '<table class="table table-responsive table-bordered table-striped">'+
                                 '<thead>'+
                                     '<tr yag-sort-head>'+
-                                        '<th ng-repeat="col in config.columns"><a yag-sort data-name="{{col.key}}" data-order="asc">{{col.name}} <i ng-class="{glyphicon : col.key === sort,\'glyphicon-sort-by-attributes\' : col.key === sort }"></i></a></th>'+
+                                        '<th ng-repeat="col in config.columns" class="{{col.cssClass}}"><a yag-sort data-name="{{col.key}}" data-order="asc">{{col.name}} <i ng-class="{glyphicon : col.key === sort,\'glyphicon-sort-by-attributes\' : col.key === sort }"></i></a></th>'+
                                     '</tr>'+
                                 '</thead>'+
                                 '<tbody>'+
-                                    '<tr ng-repeat="row in rows">'+
-                                        '<td ng-repeat="col in config.columns">{{row[col.key]}}</td>'+
+                                    '<tr ng-repeat="row in rows" ng-click="rowClick(row)">'+
+                                        '<td ng-repeat="col in config.columns"><span ng-if="!col.render" data-toggle="tooltip" data-placement="top" title="{{row[col.key]}}">{{row[col.key]}}</span><span ng-if="col.render" data-toggle="tooltip" data-placement="top" title="{{col.render(row[col.key])}}">{{col.render(row[col.key])}}</span></td>'+
                                     '</tr>'+
                                 '</tbody>'+
                                 '<tfoot>'+
                                     '<tr><td colspan="{{config.columns.length}}">' +
-            '                           <div class="    ">'+
+                                    '<div>'+
                                             '<span ng-if="size * currentPage < count" class="text-info">Showing {{size * (currentPage - 1) + 1}} to {{size * currentPage}} of {{count}}</span>'+
                                             '<span ng-if="size * currentPage > count" class="text-info">Showing {{size * (currentPage - 1) + 1}} to {{count}} of {{count}}</span>'+
                                         '</div>'+
@@ -91,8 +91,10 @@ app.factory('agSortFactory',function($http){
                 $scope.size = "10";
                 agSortFactory.getRowsOnLoad().then(function(res){
                     readResponse(res);
-                    $scope.order = 'asc';
-                    $scope.sort = Object.keys($scope.rows[0])[0];
+                    if($scope.rows.length > 0){
+                        $scope.order = 'asc';
+                        $scope.sort = Object.keys($scope.rows[0])[0];
+                    }
                 });
 
                 $scope.getPageList = function(){
@@ -141,6 +143,11 @@ app.factory('agSortFactory',function($http){
                         });
                 }
 
+                $scope.rowClick = function(row){
+                    if($scope.config.onRowClick)
+                        $scope.config.onRowClick(row);
+                };
+
                 var readResponse = function(res){
                     $scope.rows = res.data[$scope.config.objectName];
                     $scope.count = res.data.count;
@@ -150,9 +157,9 @@ app.factory('agSortFactory',function($http){
 
                 }
             }
-        }
-    })
-    .directive('yagSortHead',function(){
+		}
+	})
+	.directive('yagSortHead',function(){
         return{
             restrict : 'A',
             controller: function($scope,$element,$attrs){
@@ -172,7 +179,7 @@ app.factory('agSortFactory',function($http){
             }
         }
     })
-    .directive('yagSort',function(agSortFactory){
+	.directive('yagSort',function(agSortFactory){
         return{
             restrict : 'A',
             require : ['^yagSortHead','^^yag'],
